@@ -4,3 +4,14 @@
 *.jar
 *.war
 *.ear
+.metadata
+.gradle
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
