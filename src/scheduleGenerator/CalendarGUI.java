@@ -347,7 +347,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 
 	}
 
-	private String getNameforNum(int n) {
+	public static String getNameforNum(int n) {
 		switch (n) {
 		case (1):
 			return "Sunday";
