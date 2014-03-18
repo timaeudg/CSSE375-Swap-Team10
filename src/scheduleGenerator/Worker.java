@@ -12,6 +12,8 @@ import java.util.HashMap;
  */
 public class Worker implements Serializable{
 
+	//SWAP 1, Team 10
+	//SMELL: Data Class - this class consists entirely of accessors and mutators
 	private String name;
 	private ArrayList<Day> days = new ArrayList<Day>();
 	private HashMap<String, Integer> timesWorked;

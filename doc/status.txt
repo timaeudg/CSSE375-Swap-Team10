@@ -1,0 +1,19 @@
+II:
+  B:
+    1a.  Config.java has removed code duplication
+    1b.  INCOMPLETE
+    2.   Incomplete
+  C: Smells Found
+    1.  Data Class-worker
+    2. Incomplete
+    3. Incomplete
+    4. Incomplete
+    5. Incomplete
+    6. Incomplete
+    7. Incomplete
+    8. Incomplete
+    9. Incomplete
+    10. Incomplete
+  D: 
+    1. Incomplete
+    2. Incomplete
