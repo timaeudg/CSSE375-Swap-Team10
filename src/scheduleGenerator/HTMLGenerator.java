@@ -14,6 +14,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class HTMLGenerator {
 	
+	//SWAP 1, Team 10
+	//SMELL: Temporary Field - this is similar to a temporary field because a writer object can only exist within writeHtml(). 
+	//It should instead just be local to that method.
 	/**
 	 * Used to write.
 	 */

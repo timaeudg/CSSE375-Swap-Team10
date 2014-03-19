@@ -10,7 +10,10 @@ import java.util.ArrayList;
  *         Created Oct 15, 2012.
  */
 public class Day implements Serializable{
-	
+	//SWAP 1, Team 10
+	//SMELL: Data Class - this class consists entirely of accessors and mutators.  
+	//It would be advantageous to make it so this object kept track of requirements about what is allowed on days 
+	//and more conveniently could go from the id version of days to the named version
 	private String dayOfWeek;
 	private ArrayList<String> jobs = new ArrayList<String>();
 	

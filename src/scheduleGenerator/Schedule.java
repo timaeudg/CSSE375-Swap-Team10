@@ -186,7 +186,13 @@ public class Schedule extends Thread implements Serializable {
 		Main.dumpConfigFile();
 	}
 
+	//SWAP 1, Team 10
+	//SMELL: Feature Envy - This is functionality that is reused regularly about days but is in what seems to be the wrong class.  
+	//It should be moved to the day class
 	private int numForName(String nameOfDay) {
+		//SWAP 1, Team 10
+		//SMELL: Switch-Statement - this is essentially just a long case statement for each of the different days.  
+		//By using some built in java functionality with days, you could do this automatically.
 		int dayNum = 0;
 		if (nameOfDay.equals("Sunday")) {
 			dayNum = 1;
