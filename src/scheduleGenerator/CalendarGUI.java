@@ -46,58 +46,33 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.fillTableForThisMonth();
 	}
 
+	//QUALITY CHANGES
+	/*
+	 * In this method, there was a large amount of duplication regarding the setting of the monthTitle and the monthName
+	 * This was really space consuming, and really didn't add anything (in fact, it could cause problems, as there was more
+	 * string literal to possibly accidentally type in, making it more "dangerous"). Furthermore, it reeked of the code duplication
+	 * code smell. So, I made a method that would fetch the month name given an integer. So, now the method just needs to call that
+	 * that method one time to get the month name, and that removes the need for the switch. In the method that got the month
+	 * name, I just made use of array indexing and modulus to find the name in an array of the names.
+	 * 
+	 * As far as future features are concerned, this would allow for an arbitrary format of the months to be used in the future.
+	 * Consider public school: The teachers only work from August to about May, as such, they have no need for a Calendar that goes
+	 * from January to December. Thus, this could allow for more compact, or specialized calendar formats. Additionally, this allows
+	 * for any place to get the month name based off an integer.
+	 */
 	private void setTitleMonth(int n, int year) {
-		switch (n) {
-		case (1):
-			this.monthTitle.setText("January " + year);
-			this.monthName = "January " + year;
-			break;
-		case (2):
-			this.monthTitle.setText("February " + year);
-			this.monthName = "February " + year;
-			break;
-		case (3):
-			this.monthTitle.setText("March " + year);
-			this.monthName = "March " + year;
-			break;
-		case (4):
-			this.monthTitle.setText("April " + year);
-			this.monthName = "April " + year;
-			break;
-		case (5):
-			this.monthTitle.setText("May " + year);
-			this.monthName = "May " + year;
-			break;
-		case (6):
-			this.monthTitle.setText("June " + year);
-			this.monthName = "June " + year;
-			break;
-		case (7):
-			this.monthTitle.setText("July " + year);
-			this.monthName = "July " + year;
-			break;
-		case (8):
-			this.monthTitle.setText("August " + year);
-			this.monthName = "August " + year;
-			break;
-		case (9):
-			this.monthTitle.setText("September " + year);
-			this.monthName = "September " + year;
-			break;
-		case (10):
-			this.monthTitle.setText("October " + year);
-			this.monthName = "October " + year;
-			break;
-		case (11):
-			this.monthTitle.setText("November " + year);
-			this.monthName = "November " + year;
-			break;
-		case (12):
-			this.monthTitle.setText("December " + year);
-			this.monthName = "December " + year;
-			break;
-
-		}
+		this.monthTitle.setText(CalendarGUI.getMonthforNum(n) + year);
+		this.monthName = CalendarGUI.getMonthforNum(n) + year;
+	}
+	
+	public static String getMonthforNum(int n) {
+		String[] months = { 
+			    "January", "February", "March",
+			    "April", "May", "June", "July", 
+			    "August", "September", "October",
+			    "November", "December"
+			};
+		return months[(n-1)%months.length];
 	}
 
 	/**
@@ -115,6 +90,32 @@ public class CalendarGUI extends javax.swing.JFrame {
 				+ String.format("%02d", this.currentMonth);
 		String currentKey = "";
 
+		//QUALITY CHANGES
+		//I changed it to where I just call these two methods instead of having that big block of code
+		//see the comments for these methods for more details.
+		DefaultTableModel table = this.getTable(currentKey, keyStart, currentYear, this.currentMonth);
+		this.setTable(table);
+		
+	}
+
+	/*
+	 * QUALITY CHANGES
+	 * Seeing that all the fillMonth methods had a block of code that looked approximately the same, I decided that 
+	 * the block should be pulled out and turned into its own method. From there, I took one block, pulled it out
+	 * into this method, and checked the other blocks against the block I pulled out, and made sure there weren't any
+	 * logical differences. The only differences between the blocks where what values it used for the "currentMonth"
+	 * and "currentYear", for the method that were ahead or behind, they would calculate a different month. As such
+	 * I decided that it would be best to make this very generic, and just take any of the variables that weren't already
+	 * in this block as parameters. Even though this leads to a decent sized parameter list, it allows for great control
+	 * of the table creation. Additionally, all the parameters really shouldn't be determined anywhere aside from where
+	 * these method are called.
+	 * 
+	 * This allows for the table to be made anywhere, by any method, instead of all the logic existing in the associated
+	 * method. Most notably, this could allow for the calendar to skip ahead by a year, or perhaps other chunks of time,
+	 * since the only thing needed to be changed is the "setup" in the method that calls this one, and what is passed
+	 * into this method.
+	 */
+	private DefaultTableModel getTable(String currentKey, String keyStart, int currentYear, int currentMonth) {
 		// Generates calendar for current month if none exists
 		while (currentKey.equals("")) {
 			Set<String> keys = this.scheduleMap.keySet();
@@ -127,16 +128,15 @@ public class CalendarGUI extends javax.swing.JFrame {
 			if (currentKey.equals("")) {
 				Thread t = new Thread(this.schedule);
 				t.start();
-				//this.schedule.calculateNextMonth();
+				// this.schedule.calculateNextMonth();
 			}
 		}
-
+		
 		DefaultTableModel table = new DefaultTableModel(new Object[0][0],
 				new String[0][0]);
+		this.cal = new GregorianCalendar(currentYear, currentMonth - 1, 1);	
 
-		this.cal = new GregorianCalendar(currentYear, this.currentMonth - 1, 1);
-
-		while (this.currentMonth == this.cal.get(Calendar.MONTH) + 1) {
+		while (currentMonth == this.cal.get(Calendar.MONTH) + 1) {
 			String tempKey = this.cal.get(Calendar.YEAR)
 					+ "/"
 					+ String.format("%02d", (this.cal.get(Calendar.MONTH) + 1))
@@ -159,7 +159,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 						+ String.format("%02d",
 								this.cal.get(Calendar.DAY_OF_MONTH)) + "/"
 						+ String.format("%02d", this.cal.get(Calendar.YEAR));
-				String colTitle = this.getNameforNum(this.cal
+				String colTitle = CalendarGUI.getNameforNum(this.cal
 						.get(Calendar.DAY_OF_WEEK)) + " (" + numDate + ")";
 				table.addColumn(colTitle, colData);
 
@@ -167,6 +167,16 @@ public class CalendarGUI extends javax.swing.JFrame {
 			this.cal.add(Calendar.DATE, 1);
 		}
 
+		return table;
+	}
+	
+	/*
+	 * QUALITY CHANGES
+	 * I decided that the creation of the table, and the setting of the table should be separated in case they needed to be
+	 * changed. Also, this would fit the query/command style, so one would give you something, while this actually sets a
+	 * value.
+	 */
+	private void setTable(DefaultTableModel table){
 		HTMLGenerator.addMonth(this.monthName, table);
 		this.scheduleTable.setModel(table);
 	}
@@ -191,61 +201,11 @@ public class CalendarGUI extends javax.swing.JFrame {
 		String keyStart = currentYear + "/" + String.format("%02d", showMonth);
 		String currentKey = "";
 
-		// Generates calendar for current month if none exists
-		while (currentKey.equals("")) {
-			Set<String> keys = this.scheduleMap.keySet();
-			for (String key : keys) {
-				if (key.startsWith(keyStart)) {
-					currentKey = key;
-					break;
-				}
-			}
-			if (currentKey.equals("")) {
-				Thread t = new Thread(this.schedule);
-				t.start();
-				//this.schedule.calculateNextMonth();
-			}
-		}
-
-		DefaultTableModel table = new DefaultTableModel(new Object[0][0],
-				new String[0][0]);
-		this.cal = new GregorianCalendar(currentYear, showMonth - 1, 1);
-
-		while (showMonth == this.cal.get(Calendar.MONTH) + 1) {
-			String tempKey = this.cal.get(Calendar.YEAR)
-					+ "/"
-					+ String.format("%02d", (this.cal.get(Calendar.MONTH) + 1))
-					+ "/"
-					+ String.format("%02d", this.cal.get(Calendar.DAY_OF_MONTH));
-			if (this.scheduleMap.containsKey(tempKey)) {
-
-				int numOfJobs = this.scheduleMap.get(tempKey).size();
-				String[] colData = new String[numOfJobs];
-				int i = 0;
-
-				for (String key : this.scheduleMap.get(tempKey).keySet()) {
-					colData[i] = key + ": "
-							+ this.scheduleMap.get(tempKey).get(key).getName();
-					i++;
-				}
-
-				String numDate = String.format("%02d",
-						(this.cal.get(Calendar.MONTH) + 1))
-						+ "/"
-						+ String.format("%02d",
-								this.cal.get(Calendar.DAY_OF_MONTH))
-						+ "/"
-						+ this.cal.get(Calendar.YEAR);
-				String colTitle = this.getNameforNum(this.cal
-						.get(Calendar.DAY_OF_WEEK)) + " (" + numDate + ")";
-				table.addColumn(colTitle, colData);
-
-			}
-			this.cal.add(Calendar.DATE, 1);
-
-		}
-		HTMLGenerator.addMonth(this.monthName, table);
-		this.scheduleTable.setModel(table);
+		//QUALITY CHANGES
+		//I changed it to where I just call these two methods instead of having that big block of code
+		//see the comments for these methods for more details.
+		DefaultTableModel table = this.getTable(currentKey, keyStart, currentYear, showMonth);
+		this.setTable(table);
 	}
 
 	/**
@@ -284,65 +244,11 @@ public class CalendarGUI extends javax.swing.JFrame {
 					+ String.format("%02d", showMonth);
 			String currentKey = "";
 
-			// Generates calendar for current month if none exists
-			while (currentKey.equals("")) {
-				Set<String> keys = this.scheduleMap.keySet();
-				for (String key : keys) {
-					if (key.startsWith(keyStart)) {
-						currentKey = key;
-						break;
-					}
-				}
-				if (currentKey.equals("")) {
-					Thread t = new Thread(this.schedule);
-					t.start();
-					//this.schedule.calculateNextMonth();
-				}
-			}
-
-			DefaultTableModel table = new DefaultTableModel(new Object[0][0],
-					new String[0][0]);
-			this.cal = new GregorianCalendar(currentYear, showMonth - 1, 1);
-
-			while (showMonth == this.cal.get(Calendar.MONTH) + 1) {
-				String tempKey = this.cal.get(Calendar.YEAR)
-						+ "/"
-						+ String.format("%02d",
-								(this.cal.get(Calendar.MONTH) + 1))
-						+ "/"
-						+ String.format("%02d",
-								this.cal.get(Calendar.DAY_OF_MONTH));
-				if (this.scheduleMap.containsKey(tempKey)) {
-
-					int numOfJobs = this.scheduleMap.get(tempKey).size();
-					String[] colData = new String[numOfJobs];
-					int i = 0;
-
-					for (String key : this.scheduleMap.get(tempKey).keySet()) {
-						colData[i] = key
-								+ ": "
-								+ this.scheduleMap.get(tempKey).get(key)
-										.getName();
-						i++;
-					}
-
-					String numDate = String.format("%02d",
-							(this.cal.get(Calendar.MONTH) + 1))
-							+ "/"
-							+ String.format("%02d",
-									this.cal.get(Calendar.DAY_OF_MONTH))
-							+ "/"
-							+ this.cal.get(Calendar.YEAR);
-					String colTitle = this.getNameforNum(this.cal
-							.get(Calendar.DAY_OF_WEEK)) + " (" + numDate + ")";
-					table.addColumn(colTitle, colData);
-
-				}
-				this.cal.add(Calendar.DATE, 1);
-			}
-
-			this.scheduleTable.setModel(table);
-			HTMLGenerator.addMonth(this.monthName, table);
+			//QUALITY CHANGES
+			//I changed it to where I just call these two methods instead of having that big block of code
+			//see the comments for these methods for more details.
+			DefaultTableModel table = this.getTable(currentKey, keyStart, currentYear, showMonth);
+			this.setTable(table);
 		}
 
 	}
@@ -366,6 +272,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 		}
 		return null;
 	}
+
 
 	private void initComponents() {
 
