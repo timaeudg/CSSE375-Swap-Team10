@@ -13,6 +13,12 @@ import java.util.TreeMap;
 import javax.swing.JMenuItem;
 import javax.swing.table.DefaultTableModel;
 
+/*
+ * CODE SMELL - Large Class
+ * This class seems to have a whole lot going on. It has to initialize all its components, and then also generate tables
+ * as well as have all the event handlers. Some inheritance could split up the code some.
+ */
+
 /**
  * 
  * @author schneimd
@@ -22,10 +28,10 @@ public class CalendarGUI extends javax.swing.JFrame {
 	private Schedule schedule;
 	private GregorianCalendar cal;
 	private TreeMap<String, TreeMap<String, Worker>> scheduleMap;
-	private int currentMonth;
 	private String monthName;
 	@SuppressWarnings("unused")
 	private int earliestYear, earliestMonth, earliestDay;
+	private int currentMonth;
 	private int monthsAhead = 0;
 	private int yearsAhead = 0;
 
@@ -75,6 +81,11 @@ public class CalendarGUI extends javax.swing.JFrame {
 		return months[(n-1)%months.length];
 	}
 
+	/*
+	 * CODE SMELL: Data Clumps
+	 * This is true for all of the fill table methods, but it seems like the month, day, and year are all passed along
+	 * together or altered together at the same time. These should probably be replaced by some structure like a date.
+	 */
 	/**
 	 * Displays the calendar for the current month based on the computers month.
 	 * 
@@ -497,6 +508,12 @@ public class CalendarGUI extends javax.swing.JFrame {
 		Main.toggleCalendar();
 	}
 
+	/*
+	 * CODE SMELL: Middle Man
+	 * All of these event handler methods just delegate to other methods that more accurately describe what it is
+	 * the events are meant to trigger, so here, the indirection is not use full, should just put these methods
+	 * there instead.
+	 */
 	/**
 	 * @param evt
 	 */

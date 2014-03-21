@@ -5,15 +5,15 @@ II:
     2.   Incomplete
   C: Smells Found
     1.  Data Class-worker
-    2. Switch-Statement-schedule.java
-    3. Temporary Field HTMLGenerator.java
-    4. Feature Envy - Schedule.java
-    5. Incomplete
-    6. Incomplete
-    7. Incomplete
-    8. Incomplete
-    9. Incomplete
-    10. Incomplete
+    2.  Switch-Statement-schedule.java
+    3.  Temporary Field HTMLGenerator.java
+    4.  Feature Envy - Schedule.java
+    5.  Data Clumps	- CalendarGUI
+    6.  Middle Man - CalendarGUI - event handler methods
+    7.  Excessive Use of Literals - HTMLGenerator.java
+    8.  Long Method - WorkerSetup.java
+    9.  Large Class - CalendarGUI.java
+    10. Code Duplication - Config.java
   D: 
     1. Incomplete
     2. Incomplete

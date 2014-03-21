@@ -75,6 +75,11 @@ public class WorkerSetup extends javax.swing.JFrame {
 		addWorker();
 	}
 
+	/*
+	 * CODE SMELL - Long Method
+	 * This method is almost 200 lines long. It should be broken up to make it more readable, and allow for the removal of 
+	 * duplication.
+	 */
 	private void addWorker() {
 		this.days = Main.getDays();
 		javax.swing.JTabbedPane tempWorkerDays = new javax.swing.JTabbedPane();

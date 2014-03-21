@@ -33,6 +33,11 @@ public class Config extends javax.swing.JFrame {
 	private DefaultListModel[] models;
     
     
+    /*
+     * CODE SMELL - Code Duplication
+     * This is quite a bit of duplication, when it could be pulled into it's own method and just call it with
+     * different parameters.
+     */
     /**
      * Used to edit days.
      *
@@ -343,7 +348,7 @@ public class Config extends javax.swing.JFrame {
     	}
     }
     
-    
+
     private void stretch() {
         if(this.numSelected > 0) {
             this.setSize(801, 290);
