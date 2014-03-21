@@ -79,22 +79,10 @@ public class Schedule extends Thread implements Serializable {
 	private synchronized void calculateNextMonth() {
 
 		int initialSize = this.schedule.size();
-
+		
 		// If the schedule has already been generated
-		if (this.schedule.size() > 0) {
-			String lastDateMade = this.schedule.lastKey();
-			String[] parts = lastDateMade.split("/");
-			int year = Integer.parseInt(parts[0]);
-			int month = Integer.parseInt(parts[1]) - 1;
-			int day = Integer.parseInt(parts[2]);
-			this.cal = new GregorianCalendar(year, month, day);
-			int tempNum = this.cal.get(Calendar.MONTH);
-			while (tempNum == this.cal.get(Calendar.MONTH)) {
-				this.cal.add(Calendar.DATE, 1);
-			}
-		}
-
-		// Used to see if month changes
+		loadPreviousMonths();
+		
 		int currentMonth = this.cal.get(Calendar.MONTH);
 
 		int daysInMonth = 0;
@@ -114,52 +102,15 @@ public class Schedule extends Thread implements Serializable {
 					ArrayList<String> jobsInOrder = day.getJobs();
 
 					// Used for html later
-
 					daysInMonth++;
 					numOfJobs.add(jobsInOrder.size());
 
-					//
-
 					for (String job : jobsInOrder) {
 
-						ArrayList<Worker> workersForJob = new ArrayList<Worker>();
-
-						for (Worker worker : this.workerIndices.get(this
-								.numForName(day.getNameOfDay()))) {
-							Day workerDay = worker.getDayWithName(day
-									.getNameOfDay());
-							if (workerDay.getJobs().contains(job)
-									&& !workersWorking.contains(worker
-											.getName())) {
-								workersForJob.add(worker);
-
-							}
-						}
-						if (workersForJob.size() > 0) {
-							Worker workerForJob = workersForJob
-									.get(new Random().nextInt(workersForJob
-											.size()));
-							for (Worker w : workersForJob) {
-								if (w.numWorkedForJob(job) < workerForJob
-										.numWorkedForJob(job)) {
-									workerForJob = w;
-								}
-							}
-							jobsWithWorker.put(job, workerForJob);
-							workersWorking.add(workerForJob.getName());
-							workerForJob.addWorkedJob(job);
-						} else {
-							jobsWithWorker.put(job, new Worker("Empty",
-									new ArrayList<Day>()));
-							JOptionPane
-									.showMessageDialog(
-											new JFrame(),
-											"No workers are able to work as a(n) "
-													+ job + " on "
-													+ day.getNameOfDay());
-							this.workerForEveryJob = false;
-							break;
-						}
+						ArrayList<Worker> workersForJob = availableWorkersForJob(
+								day, workersWorking, job);
+						selectWorker(day, jobsWithWorker, workersWorking, job,
+								workersForJob);
 
 					}
 					String date = this.cal.get(Calendar.YEAR)
@@ -184,6 +135,74 @@ public class Schedule extends Thread implements Serializable {
 		}
 
 		Main.dumpConfigFile();
+	}
+
+	private void loadPreviousMonths() {
+		if (this.schedule.size() > 0) {
+			String lastDateMade = this.schedule.lastKey();
+			String[] parts = lastDateMade.split("/");
+			int year = Integer.parseInt(parts[0]);
+			int month = Integer.parseInt(parts[1]) - 1;
+			int day = Integer.parseInt(parts[2]);
+			this.cal = new GregorianCalendar(year, month, day);
+			int tempNum = this.cal.get(Calendar.MONTH);
+			while (tempNum == this.cal.get(Calendar.MONTH)) {
+				this.cal.add(Calendar.DATE, 1);
+			}
+		}
+	}
+
+	//SWAP 1, Team 10
+	//QUALITY CHANGE
+	//Separating out this method would allow you to determine the available workers for any different day.  
+	//This makes it easier to locate code relating to availability and would allow for reuse
+	private ArrayList<Worker> availableWorkersForJob(Day day,
+			ArrayList<String> workersWorking, String job) {
+		ArrayList<Worker> workersForJob = new ArrayList<Worker>();
+
+		for (Worker worker : this.workerIndices.get(this
+				.numForName(day.getNameOfDay()))) {
+			Day workerDay = worker.getDayWithName(day
+					.getNameOfDay());
+			if (workerDay.getJobs().contains(job)
+					&& !workersWorking.contains(worker
+							.getName())) {
+				workersForJob.add(worker);
+
+			}
+		}
+		return workersForJob;
+	}
+	
+	//This encapsulates the worker selection given the potential workers for the job.  This could easily enable 
+	//multiple ways of selecting or allow it to be used elsewhere.  Additionally, it helps to improve readibility.
+	private void selectWorker(Day day, TreeMap<String, Worker> jobsWithWorker,
+			ArrayList<String> workersWorking, String job,
+			ArrayList<Worker> workersForJob) {
+		if (workersForJob.size() > 0) {
+			Worker workerForJob = workersForJob
+					.get(new Random().nextInt(workersForJob
+							.size()));
+			for (Worker w : workersForJob) {
+				if (w.numWorkedForJob(job) < workerForJob
+						.numWorkedForJob(job)) {
+					workerForJob = w;
+				}
+			}
+			jobsWithWorker.put(job, workerForJob);
+			workersWorking.add(workerForJob.getName());
+			workerForJob.addWorkedJob(job);
+		} else {
+			jobsWithWorker.put(job, new Worker("Empty",
+					new ArrayList<Day>()));
+			JOptionPane
+					.showMessageDialog(
+							new JFrame(),
+							"No workers are able to work as a(n) "
+									+ job + " on "
+									+ day.getNameOfDay());
+			this.workerForEveryJob = false;
+		}
 	}
 
 	//SWAP 1, Team 10

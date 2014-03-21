@@ -2,9 +2,9 @@ II:
   B:
     1a.  Config.java has removed code duplication
     1b.  INCOMPLETE
-    2.   Incomplete
+    2.   Doneish.  More could be done but it presently works
   C: Smells Found
-    1.  Data Class-worker
+    1. Data Class-worker
     2. Switch-Statement-schedule.java
     3. Temporary Field HTMLGenerator.java
     4. Feature Envy - Schedule.java
