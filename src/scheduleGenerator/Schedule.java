@@ -1,6 +1,6 @@
 package scheduleGenerator;
 
-import java.io.Serializable;
+import scheduleGenerator.AbstractSchedule;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -16,14 +16,8 @@ import javax.swing.JOptionPane;
  * 
  * @author schneimd. Created Oct 18, 2012.
  */
-public class Schedule extends Thread implements Serializable {
+public class Schedule extends AbstractSchedule {
 
-	private ArrayList<Worker> workers;
-	private ArrayList<Day> days;
-	private TreeMap<String, TreeMap<String, Worker>> schedule;
-	private GregorianCalendar cal;
-	private HashMap<Integer, ArrayList<Worker>> workerIndices;
-	private boolean workerForEveryJob = true;
 
 	/**
 	 * Used to construct an initial schedule, used if one does not exist.
@@ -48,21 +42,8 @@ public class Schedule extends Thread implements Serializable {
 
 		this.calculateNextMonth();
 	}
-
-	@Override
-	public void run() {
-		this.calculateNextMonth();
-	}
-
-	/**
-	 * returns workers in schedule.
-	 * 
-	 * @return workers
-	 */
-	public ArrayList<Worker> getWorkers() {
-		return this.workers;
-	}
-
+	
+	
 	private void generateIndices() {
 		for (int i = 0; i < this.workers.size(); i++) {
 			for (Day day : this.workers.get(i).getDays()) {
@@ -76,7 +57,7 @@ public class Schedule extends Thread implements Serializable {
 	 * Calculates another month of schedule based on workers availability.
 	 * 
 	 */
-	private synchronized void calculateNextMonth() {
+	protected void calculateNextMonth() {
 
 		int initialSize = this.schedule.size();
 
@@ -185,59 +166,4 @@ public class Schedule extends Thread implements Serializable {
 
 		Main.dumpConfigFile();
 	}
-
-	//SWAP 1, Team 10
-	//SMELL: Feature Envy - This is functionality that is reused regularly about days but is in what seems to be the wrong class.  
-	//It should be moved to the day class
-	private int numForName(String nameOfDay) {
-		//SWAP 1, Team 10
-		//SMELL: Switch-Statement - this is essentially just a long case statement for each of the different days.  
-		//By using some built in java functionality with days, you could do this automatically.
-		int dayNum = 0;
-		if (nameOfDay.equals("Sunday")) {
-			dayNum = 1;
-		} else if (nameOfDay.equals("Monday")) {
-			dayNum = 2;
-		} else if (nameOfDay.equals("Tuesday")) {
-			dayNum = 3;
-		} else if (nameOfDay.equals("Wednesday")) {
-			dayNum = 4;
-		} else if (nameOfDay.equals("Thursday")) {
-			dayNum = 5;
-		} else if (nameOfDay.equals("Friday")) {
-			dayNum = 6;
-		} else if (nameOfDay.equals("Saturday")) {
-			dayNum = 7;
-		}
-		return dayNum;
-	}
-
-	// /**
-	// * Returns the month/day/year of next date with the name of day.
-	// *
-	// * @param nameOfDay
-	// * @return string of year/month/day format
-	// */
-	// private String getNextDate(String nameOfDay) {
-	// int dayNum = numForName(nameOfDay);
-	// GregorianCalendar tempCal = (GregorianCalendar) this.cal.clone();
-	//
-	// tempCal.add(Calendar.DATE, 1);
-	// while (tempCal.get(Calendar.DAY_OF_WEEK) != dayNum) {
-	// tempCal.add(Calendar.DATE, 1);
-	// }
-	// return String.valueOf(tempCal.get(Calendar.YEAR)) + "/" +
-	// String.valueOf(tempCal.get(Calendar.MONTH)) + "/"
-	// + String.valueOf(tempCal.get(Calendar.DAY_OF_MONTH));
-	// }
-
-	/**
-	 * Returns the schedule.
-	 * 
-	 * @return HashMap schedule
-	 */
-	public TreeMap<String, TreeMap<String, Worker>> getSchedule() {
-		return this.schedule;
-	}
-
 }

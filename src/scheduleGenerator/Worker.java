@@ -96,4 +96,10 @@ public class Worker implements Serializable{
 		this.days.add(d);
 	}
 	
+	@Override
+	public String toString(){
+		
+		return this.name;
+	}
+	
 }

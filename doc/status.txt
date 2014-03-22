@@ -15,5 +15,5 @@ II:
     9.  Large Class - CalendarGUI.java
     10. Code Duplication - Config.java
   D: 
-    1. Incomplete
+    1. Working on Bonus Feature 1 - schedule each person at least once before repeating a person - Devon
     2. Incomplete

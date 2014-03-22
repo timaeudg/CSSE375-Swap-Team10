@@ -1,5 +1,6 @@
 package scheduleGenerator;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CalendarGUI extends javax.swing.JFrame {
 
-	private Schedule schedule;
+	private AbstractSchedule schedule;
 	private GregorianCalendar cal;
 	private TreeMap<String, TreeMap<String, Worker>> scheduleMap;
 	private String monthName;
@@ -52,6 +53,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.fillTableForThisMonth();
 	}
 
+	//SWAP 1 TEAM 10
 	//QUALITY CHANGES
 	/*
 	 * In this method, there was a large amount of duplication regarding the setting of the monthTitle and the monthName
@@ -110,6 +112,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 	}
 
 	/*
+	 * SWAP 1 TEAM 10
 	 * QUALITY CHANGES
 	 * Seeing that all the fillMonth methods had a block of code that looked approximately the same, I decided that 
 	 * the block should be pulled out and turned into its own method. From there, I took one block, pulled it out
@@ -182,6 +185,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 	}
 	
 	/*
+	 * SWAP 1 TEAM 10
 	 * QUALITY CHANGES
 	 * I decided that the creation of the table, and the setting of the table should be separated in case they needed to be
 	 * changed. Also, this would fit the query/command style, so one would give you something, while this actually sets a
@@ -212,6 +216,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 		String keyStart = currentYear + "/" + String.format("%02d", showMonth);
 		String currentKey = "";
 
+		//SWAP 1 TEAM 10
 		//QUALITY CHANGES
 		//I changed it to where I just call these two methods instead of having that big block of code
 		//see the comments for these methods for more details.
@@ -303,6 +308,8 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.generateMenu = new javax.swing.JMenu();
 		this.genHtml = new javax.swing.JMenuItem();
 		this.generateText = new javax.swing.JMenuItem();
+		this.scheduleMenu = new javax.swing.JMenu();
+		this.schedulePreferredItem = new javax.swing.JMenuItem();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("Calendar");
@@ -434,6 +441,22 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.generateMenu.add(this.generateText);
 
 		this.menuBar.add(this.generateMenu);
+		
+		this.scheduleMenu.add(this.schedulePreferredItem);
+		this.scheduleMenu.setText("Schedule");
+		
+		this.schedulePreferredItem.setText("Schedule Jobs with Worker Preferences");
+		
+		this.schedulePreferredItem.addActionListener(new java.awt.event.ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				HTMLGenerator.reset();
+				Main.setSchedule(new Schedule(Main.getDays(), Main.getWorkers()));
+				Main.dumpConfigFile();
+				Main.cal = new CalendarGUI(Main.getSchedule());
+			}
+			
+		});
 
 		setJMenuBar(this.menuBar);
 
@@ -629,4 +652,6 @@ public class CalendarGUI extends javax.swing.JFrame {
 	private javax.swing.JMenuItem saveChanges;
 	private javax.swing.JTable scheduleTable;
 	private javax.swing.JMenuItem undoChanges;
+	private javax.swing.JMenu scheduleMenu;
+	private javax.swing.JMenuItem schedulePreferredItem;
 }
