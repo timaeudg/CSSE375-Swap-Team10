@@ -16,4 +16,4 @@ II:
     10. Code Duplication - Config.java
   D: 
     1. Finished Bonus feature; should actually do both 1 and 2: Schedule everyone once before repeating, and according to worker preferences
-    2. Incomplete
+    2. Finished Loading other files specified by the user, can't make brand new files without renaming, but not my problem
