@@ -33,7 +33,7 @@ public class Main {
 	 * Displays schedule.
 	 */
 	static CalendarGUI cal;
-	private static Schedule schedule;
+	private static AbstractSchedule schedule;
 
 	/**
 	 * Program starts here.
@@ -92,7 +92,7 @@ public class Main {
 	 * 
 	 * @return Returns the schedule.
 	 */
-	public static Schedule getSchedule() {
+	public static AbstractSchedule getSchedule() {
 		return Main.schedule;
 	}
 
@@ -102,7 +102,7 @@ public class Main {
 	 * @param schedule
 	 *            The schedule to set.
 	 */
-	public static void setSchedule(Schedule schedule) {
+	public static void setSchedule(AbstractSchedule schedule) {
 		Main.schedule = schedule;
 	}
 
@@ -182,7 +182,7 @@ public class Main {
 			ObjectInputStream fileRecall = new ObjectInputStream(recallConfig);
 			days = (ArrayList<Day>) fileRecall.readObject();
 			workers = (ArrayList<Worker>) fileRecall.readObject();
-			schedule = (Schedule) fileRecall.readObject();
+			schedule = (AbstractSchedule) fileRecall.readObject();
 			HTMLGenerator.setTables((String)fileRecall.readObject());
 			
 			fileRecall.close();

@@ -1,17 +1,18 @@
 package scheduleGenerator;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.TreeMap;
 
-public abstract class AbstractSchedule extends Thread {
+public abstract class AbstractSchedule extends Thread implements Serializable {
 	
-	protected ArrayList<Worker> workers;
+    private static final long serialVersionUID = 6595204764383243072L;
+    protected ArrayList<Worker> workers;
 	protected ArrayList<Day> days;
 	protected TreeMap<String, TreeMap<String, Worker>> schedule;
 	protected GregorianCalendar cal;
-	protected HashMap<Integer, ArrayList<Worker>> workerIndices;
 	protected boolean workerForEveryJob = true;
 
 	/**

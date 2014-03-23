@@ -41,7 +41,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 	 * 
 	 * @param schd
 	 */
-	public CalendarGUI(Schedule schd) {
+	public CalendarGUI(AbstractSchedule schd) {
 		this.schedule = schd;
 		this.scheduleMap = this.schedule.getSchedule();
 		String[] earliest = this.scheduleMap.firstKey().split("/");
@@ -451,12 +451,15 @@ public class CalendarGUI extends javax.swing.JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				HTMLGenerator.reset();
-				Main.setSchedule(new Schedule(Main.getDays(), Main.getWorkers()));
+				Main.setSchedule(new WorkerPreferenceSchedule(Main.getDays(), Main.getWorkers()));
 				Main.dumpConfigFile();
 				Main.cal = new CalendarGUI(Main.getSchedule());
+				Main.toggleCalendar();
 			}
 			
 		});
+		
+		this.menuBar.add(this.scheduleMenu);
 
 		setJMenuBar(this.menuBar);
 

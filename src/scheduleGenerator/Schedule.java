@@ -1,6 +1,7 @@
 package scheduleGenerator;
 
 import scheduleGenerator.AbstractSchedule;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -18,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class Schedule extends AbstractSchedule {
 
-
+    protected HashMap<Integer, ArrayList<Worker>> workerIndices;
 	/**
 	 * Used to construct an initial schedule, used if one does not exist.
 	 * 
