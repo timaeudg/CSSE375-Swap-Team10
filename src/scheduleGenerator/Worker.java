@@ -2,6 +2,7 @@ package scheduleGenerator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -94,6 +95,12 @@ public class Worker implements Serializable{
 	 */
 	public void addDay(Day d) {
 		this.days.add(d);
+	}
+	
+	@Override
+	public String toString(){
+		
+		return this.name;
 	}
 	
 }

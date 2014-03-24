@@ -131,7 +131,10 @@ public class HTMLGenerator {
 		table = tables;
 	}
 	
-	
+    /*
+     * CODE SMELL - Excessive use of literals
+     * Way too much text for source code, should be in a text file if nothing else.
+     */
 	/**
 	 * Used to store array for javascipt.
 	 */
