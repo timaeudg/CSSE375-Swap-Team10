@@ -14,6 +14,7 @@ II:
     8.  Long Method - WorkerSetup.java
     9.  Large Class - CalendarGUI.java
     10. Code Duplication - Config.java
+    11. Long Method - WorkerSetup.java (different method)
   D: 
     1. Finished Bonus feature; should actually do both 1 and 2: Schedule everyone once before repeating, and according to worker preferences
     2. Finished Loading other files specified by the user, can't make brand new files without renaming, but not my problem
