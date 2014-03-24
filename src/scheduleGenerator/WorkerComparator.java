@@ -3,6 +3,10 @@ package scheduleGenerator;
 import java.io.Serializable;
 import java.util.Comparator;
 
+/*
+ * BONUS FEATURE
+ * This is a comparator for the PriorityQueue in the Schedule so that there didn't need to be changes to the Worker class.
+ */
 public class WorkerComparator implements Serializable, Comparator<Worker> {
     String jobID;
 

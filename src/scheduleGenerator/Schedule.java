@@ -12,6 +12,16 @@ import java.util.TreeMap;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+
+/*
+ * BONUS FEATURE
+ * Here, I wanted to make the make a schedule that would do similar things as here, but did scheduling things differently
+ * To allow for this, I took much of the functionality that needed to be in both this and the new schedule and put it into
+ * an abstract class. Other than extracting some of the stuff that was here, no real changes were made.
+ * The main code smell we needed to overcome was Shotgun surgery, as many things needed the schedule, and so any
+ * change is likely to affect many other class. 
+ */
+
 /**
  * Used to store predicted days and generate new days.
  * 

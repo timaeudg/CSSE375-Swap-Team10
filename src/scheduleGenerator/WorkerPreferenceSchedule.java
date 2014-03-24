@@ -12,6 +12,13 @@ import java.util.TreeMap;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+
+/*
+ * BONUS FEATURE
+ * Here, the schedule operates very similarly to the Schedule, except for a priority queue is used for the scheduling to
+ * make sure that people are assigned in an order that makes sure each person who wants a certain job can get it.
+ */
+
 /**
  * Used to store predicted days and generate new days.
  * 

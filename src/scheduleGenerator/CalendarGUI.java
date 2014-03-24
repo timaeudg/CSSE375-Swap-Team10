@@ -364,6 +364,8 @@ public class CalendarGUI extends javax.swing.JFrame {
             }
         });
 
+        //ADDITIONAL FEATURE
+        //This is the action listener for the ability to load other files, see method for more
         this.loadSchedule.setText("Load Schedule");
         this.loadSchedule.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -610,6 +612,9 @@ public class CalendarGUI extends javax.swing.JFrame {
         }
     }
 
+    //ADDITIONAL FEATURE
+    //Here, there really wasn't any code smell, as the code was so unlike anything that really existed up to this point
+    //The only thing that really interacted with old code was the idea that we'd want to load a file like they already do.
     private void openNewSchedule() {
         String filename;
         String dirPath;
@@ -624,7 +629,6 @@ public class CalendarGUI extends javax.swing.JFrame {
                 Main.recallChosenConfigFile(filename, dirPath);
                 if(Main.getSchedule() != (null)){
                     Main.cal = new CalendarGUI(Main.getSchedule());
-                    //config.setVisible(true);
                     Main.cal.setVisible(true);
                 }
             } catch (ClassNotFoundException | IOException e) {

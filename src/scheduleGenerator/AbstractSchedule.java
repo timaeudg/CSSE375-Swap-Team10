@@ -6,6 +6,11 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.TreeMap;
 
+/*
+ * BONUS FEATURE
+ * This code is virtually the same as what was in Schedule.java, just extracted here.
+ */
+
 public abstract class AbstractSchedule extends Thread implements Serializable {
 	
     private static final long serialVersionUID = 6595204764383243072L;
