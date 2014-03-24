@@ -75,12 +75,14 @@ public class WorkerSetup extends javax.swing.JFrame {
 		addWorker();
 	}
 
-	/*
-	 * CODE SMELL - Long Method
-	 * This method is almost 200 lines long. It should be broken up to make it more readable, and allow for the removal of 
-	 * duplication.
-	 */
 	private void addWorker() {
+		
+		// SWAP 1, TEAM 9
+		// SMELL: Comments - The number of comments in the code below indicates that they are serving
+		// as dividers, in a way that would indicate we should extract methods from this function.
+		// This would vastly improve the code quality and readability here, allowing us to actually
+		// extend functionality in adding workers.
+		
 		this.days = Main.getDays();
 		javax.swing.JTabbedPane tempWorkerDays = new javax.swing.JTabbedPane();
 		javax.swing.JTextField tempWorkerName = new javax.swing.JTextField();
@@ -240,28 +242,23 @@ public class WorkerSetup extends javax.swing.JFrame {
 		}
 	}
 
-	/*CODE SMELL - Long method
-	 * Similar to the smell above, this is an incredibly long method that is nearly impossible to understand
-	 * This method should be broken up into smaller methods that are easier to understand and better show
-	 * how the method works and what parts to do what.
-	*/
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 */
 	private void initComponents() {
-		
-		// Initializes the named buttons as new objects
+
+		// SWAP 1, TEAM 9
+		// SMELL: Long Method - This method below clearly is much longer than should be in one function.
+		// If we broke out this function into multiple sub-functions, we would be able to modify the
+		// worker setup menu much more easily, and would be able to add more functionality to it.
 		this.workerTabPanel = new javax.swing.JTabbedPane();
 		this.addButton = new javax.swing.JButton();
 		this.removeButton = new javax.swing.JButton();
 		this.nextButton = new javax.swing.JButton();
 		this.backButton = new javax.swing.JButton();
 
-		//Sets the program to close when the window is closed
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("Worker Setup");
-		
-		// The following methods should be grouped with the above initilization of the buttons.
 
 		this.addButton.setText("Add Worker");
 		this.addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -270,7 +267,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 				addButtonActionPerformed(evt);
 			}
 		});
-		
+
 		this.removeButton.setText("Remove Worker");
 		this.removeButton
 				.addActionListener(new java.awt.event.ActionListener() {
@@ -296,9 +293,6 @@ public class WorkerSetup extends javax.swing.JFrame {
 			}
 		});
 
-		// This code seams to set up the window and buttons on the panel.
-		// The button location, allignment, size, etc.
-		// This part should be its own subclass to make it all easier to read.
 		JScrollPane outside = new JScrollPane();
 		outside.setViewportView(this.workerTabPanel);
 
