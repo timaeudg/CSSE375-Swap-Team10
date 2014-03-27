@@ -4,8 +4,10 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.NavigableSet;
@@ -381,24 +383,14 @@ public class CalendarGUI extends javax.swing.JFrame {
 
 	}
 
-	private String getNameforNum(int n) {
-		switch (n) {
-		case (1):
-			return "Sunday";
-		case (2):
-			return "Monday";
-		case (3):
-			return "Tuesday";
-		case (4):
-			return "Wednesday";
-		case (5):
-			return "Thursday";
-		case (6):
-			return "Friday";
-		case (7):
-			return "Saturday";
-		}
-		return null;
+	public static String getNameforNum(int n) {
+		String[] days = new DateFormatSymbols().getWeekdays();
+		return days[n];
+	}
+	
+	public static int getNumForName(String n) {
+		ArrayList<String> days = new ArrayList<String>(Arrays.asList(new DateFormatSymbols().getWeekdays()));
+		return days.indexOf(n);
 	}
 
 	private void initComponents() {
@@ -412,7 +404,6 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.menuBar = new javax.swing.JMenuBar();
 		this.fileMenu = new javax.swing.JMenu();
 		this.saveChanges = new javax.swing.JMenuItem();
-		this.undoChanges = new javax.swing.JMenuItem();
 		this.editMenu = new javax.swing.JMenu();
 		this.editWorkers = new javax.swing.JMenuItem();
 		this.editDays = new javax.swing.JMenuItem();
@@ -491,18 +482,6 @@ public class CalendarGUI extends javax.swing.JFrame {
 			}
 		});
 		this.fileMenu.add(this.saveChanges);
-
-		this.undoChanges.setAccelerator(javax.swing.KeyStroke.getKeyStroke(
-				java.awt.event.KeyEvent.VK_Z,
-				java.awt.event.InputEvent.CTRL_MASK));
-		this.undoChanges.setText("Undo Changes");
-		this.undoChanges.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				undoChangesActionPerformed(evt);
-			}
-		});
-		//this.fileMenu.add(this.undoChanges);
 		
 		this.menuBar.add(this.fileMenu);
 
@@ -753,9 +732,8 @@ public class CalendarGUI extends javax.swing.JFrame {
 	// undo button does not appear to be implemented. The author apppears to have put in this code 
 	// in the hope of implementing the undo button at some point. This code should simply be deleted 
 	// to avoid confusing any people who may decide to utilize this codebase. 
-	private void undoChangesActionPerformed(java.awt.event.ActionEvent evt) {
-		// removed
-	}
+	// SWAP 2, TEAM 10
+	// Refactor: Removed the unuseful code as well as the unused pieces that reference it
 	
 	private void editCell(Worker input)
 	{
@@ -802,5 +780,4 @@ public class CalendarGUI extends javax.swing.JFrame {
 	private javax.swing.JButton previousMonthButton;
 	private javax.swing.JMenuItem saveChanges;
 	private javax.swing.JTable scheduleTable;
-	private javax.swing.JMenuItem undoChanges;
 }
