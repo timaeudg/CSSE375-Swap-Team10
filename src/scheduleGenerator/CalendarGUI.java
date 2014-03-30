@@ -1,5 +1,7 @@
 package scheduleGenerator;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
@@ -14,8 +16,10 @@ import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -400,6 +404,9 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.generateMenu = new javax.swing.JMenu();
 		this.genHtml = new javax.swing.JMenuItem();
 		this.generateText = new javax.swing.JMenuItem();
+		this.fontMenu = new javax.swing.JMenu();
+		this.comicMenuItem = new javax.swing.JMenuItem();
+		this.timesMenuItem = new javax.swing.JMenuItem();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("Calendar");
@@ -557,6 +564,36 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.generateMenu.add(this.generateText);
 
 		this.menuBar.add(this.generateMenu);
+		
+		this.fontMenu.setText("Font Options");
+		
+		this.comicMenuItem.addActionListener(new java.awt.event.ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setUIFont(new javax.swing.plaf.FontUIResource(new Font("Comic Sans MS",Font.PLAIN, 36)));
+                Main.toggleCalendar();
+                Main.cal = new CalendarGUI(schedule);
+                Main.toggleCalendar();
+            }
+		});
+		this.comicMenuItem.setText("Comic Sans");
+		
+		this.fontMenu.add(this.comicMenuItem);
+		
+		this.timesMenuItem.addActionListener(new java.awt.event.ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setUIFont(new javax.swing.plaf.FontUIResource(new Font("Times New Roman",Font.PLAIN, 36)));
+                Main.toggleCalendar();
+                Main.cal = new CalendarGUI(schedule);
+                Main.toggleCalendar();
+            }
+        });
+		
+		this.timesMenuItem.setText("Times New Roman");
+		
+		this.fontMenu.add(this.timesMenuItem);
+		this.menuBar.add(this.fontMenu);
 
 		setJMenuBar(this.menuBar);
 
@@ -754,6 +791,25 @@ public class CalendarGUI extends javax.swing.JFrame {
 				java.awt.event.InputEvent.CTRL_MASK));
 		input.setText(text);
 	}
+	
+	/*
+	 * FURTHER ELABORATION:
+	 * To continue with the idea of UI improvements, I added the ability to change the font
+	 * of the application during run time, should appeal to people now. 
+	 */
+	private static void setUIFont(javax.swing.plaf.FontUIResource f)
+	{
+	    java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
+	    while (keys.hasMoreElements())
+	    {
+	        Object key = keys.nextElement();
+	        Object value = UIManager.get(key);
+	        if (value instanceof javax.swing.plaf.FontUIResource)
+	        {
+	            UIManager.put(key, f);
+	        }
+	    }
+	}
 
 	private javax.swing.JMenuItem editDays;
 	private javax.swing.JMenu editMenu;
@@ -770,4 +826,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 	private javax.swing.JButton previousMonthButton;
 	private javax.swing.JMenuItem saveChanges;
 	private javax.swing.JTable scheduleTable;
+	private javax.swing.JMenu fontMenu;
+    private javax.swing.JMenuItem comicMenuItem;
+    private javax.swing.JMenuItem timesMenuItem;
 }
