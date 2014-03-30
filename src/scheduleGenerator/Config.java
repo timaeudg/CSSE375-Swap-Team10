@@ -60,14 +60,14 @@ public class Config extends javax.swing.JFrame {
 			// do not have to be rediscovered in the day value.
 
 			// SWAP 2, TEAM 2
-			// Refactor: Now there is a method within calendargui that without a
+			// Refactor: Now there is a method within Day that without a
 			// case statment determines the day number from its associated
 			// string. Additionally, the different components that couldn't be
 			// accessed by an id now can due to the change for "duplicate code"
 			// so now the entire case statement can be removed. This also
 			// removed the need for the method that was just supposed to help
 			// with the internals of the case statement
-			int dayIndex = CalendarGUI.getNumForName(day.getNameOfDay());
+			int dayIndex = Day.getNumForName(day.getNameOfDay());
 			this.checkList[dayIndex].doClick();
 			ArrayList<String> jobs = day.getJobs();
 			for (String job : jobs) {
@@ -126,8 +126,8 @@ public class Config extends javax.swing.JFrame {
 
 		for (int i = 0; i < 7; i++) {
 			this.checkList[i] = new JCheckBox();
-			this.checkList[i].setText(CalendarGUI.getNameforNum(i + 1));
-			this.checkList[i].setName(CalendarGUI.getNameforNum(i + 1)
+			this.checkList[i].setText(Day.getNameforNum(i + 1));
+			this.checkList[i].setName(Day.getNameforNum(i + 1)
 					.toLowerCase() + "Check"); // NOI18N
 			this.checkList[i].addItemListener(new DayHandler(this, i));
 		}
@@ -455,7 +455,7 @@ public class Config extends javax.swing.JFrame {
 																		javax.swing.GroupLayout.PREFERRED_SIZE))
 												.addContainerGap(25,
 														Short.MAX_VALUE)));
-				c.dayTabs.addTab(CalendarGUI.getNameforNum(day + 1),
+				c.dayTabs.addTab(Day.getNameforNum(day + 1),
 						c.dayTab[day]);
 			} else {
 				c.numSelected--;
@@ -472,7 +472,7 @@ public class Config extends javax.swing.JFrame {
 		ArrayList<Day> days = new ArrayList<Day>();
 		for (int i = 0; i < 7; i++) {
 			if (this.checkList[i].isSelected()) {
-				days.add(new Day(CalendarGUI.getNameforNum(i + 1),
+				days.add(new Day(Day.getNameforNum(i + 1),
 						new ArrayList<Object>(Arrays.asList(this.models[i]
 								.toArray()))));
 			}

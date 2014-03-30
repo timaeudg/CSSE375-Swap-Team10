@@ -195,7 +195,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 						+ String.format("%02d",
 								this.cal.get(Calendar.DAY_OF_MONTH)) + "/"
 						+ String.format("%02d", this.cal.get(Calendar.YEAR));
-				String colTitle = this.getNameforNum(this.cal
+				String colTitle = Day.getNameforNum(this.cal
 						.get(Calendar.DAY_OF_WEEK)) + " (" + numDate + ")";
 				table.addColumn(colTitle, colData);
 
@@ -272,7 +272,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 								this.cal.get(Calendar.DAY_OF_MONTH))
 						+ "/"
 						+ this.cal.get(Calendar.YEAR);
-				String colTitle = this.getNameforNum(this.cal
+				String colTitle = Day.getNameforNum(this.cal
 						.get(Calendar.DAY_OF_WEEK)) + " (" + numDate + ")";
 				table.addColumn(colTitle, colData);
 
@@ -369,7 +369,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 									this.cal.get(Calendar.DAY_OF_MONTH))
 							+ "/"
 							+ this.cal.get(Calendar.YEAR);
-					String colTitle = this.getNameforNum(this.cal
+					String colTitle = Day.getNameforNum(this.cal
 							.get(Calendar.DAY_OF_WEEK)) + " (" + numDate + ")";
 					table.addColumn(colTitle, colData);
 
@@ -381,16 +381,6 @@ public class CalendarGUI extends javax.swing.JFrame {
 			HTMLGenerator.addMonth(this.monthName, table);
 		}
 
-	}
-
-	public static String getNameforNum(int n) {
-		String[] days = new DateFormatSymbols().getWeekdays();
-		return days[n];
-	}
-	
-	public static int getNumForName(String n) {
-		ArrayList<String> days = new ArrayList<String>(Arrays.asList(new DateFormatSymbols().getWeekdays()));
-		return days.indexOf(n);
 	}
 
 	private void initComponents() {
