@@ -25,6 +25,17 @@ public class Schedule extends Thread implements Serializable {
 	private HashMap<Integer, ArrayList<Worker>> workerIndices;
 	private boolean workerForEveryJob = true;
 	private HashMap<String, Integer> lastWorkerToPerformJob;
+	
+	/*
+	 * Removing magic numbers from the numForName method.
+	 */
+	private int final SUNDAY = 1;
+	private int final MONDAY = 2;
+	private int final TUESDAY = 3;
+	private int final WEDNESDAY = 4;
+	private int final THURSDAY = 5;
+	private int final FRIDAY = 6;
+	private int final SATURDAY = 7;
 
 	/**
 	 * Used to construct an initial schedule, used if one does not exist.
@@ -252,19 +263,19 @@ public class Schedule extends Thread implements Serializable {
 
 		int dayNum = 0;
 		if (nameOfDay.equals("Sunday")) {
-			dayNum = 1;
+			dayNum = SUNDAY;
 		} else if (nameOfDay.equals("Monday")) {
-			dayNum = 2;
+			dayNum = MONDAY;
 		} else if (nameOfDay.equals("Tuesday")) {
-			dayNum = 3;
+			dayNum = TUESDAY;
 		} else if (nameOfDay.equals("Wednesday")) {
-			dayNum = 4;
+			dayNum = WEDNESDAY;
 		} else if (nameOfDay.equals("Thursday")) {
-			dayNum = 5;
+			dayNum = THURSDAY;
 		} else if (nameOfDay.equals("Friday")) {
-			dayNum = 6;
+			dayNum = FRIDAY;
 		} else if (nameOfDay.equals("Saturday")) {
-			dayNum = 7;
+			dayNum = SATURDAY;
 		}
 		return dayNum;
 	}
