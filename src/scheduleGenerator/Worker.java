@@ -2,7 +2,6 @@ package scheduleGenerator;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -11,11 +10,14 @@ import java.util.HashMap;
  * @author schneimd.
  *         Created Oct 15, 2012.
  */
+
+
 public class Worker implements Serializable{
 
 	private String name;
 	private ArrayList<Day> days = new ArrayList<Day>();
 	private HashMap<String, Integer> timesWorked;
+	private ArrayList<String> daysOff;
 	
 	/**
 	 * Builds a worker with available days.
@@ -26,6 +28,7 @@ public class Worker implements Serializable{
 	 */
 	public Worker(String name, ArrayList<Day> days)
 	{
+		this.daysOff = new ArrayList<String>();
 		this.name = name;
 		this.days = days;
 		this.timesWorked = new HashMap<String, Integer>();
@@ -34,6 +37,38 @@ public class Worker implements Serializable{
 				this.timesWorked.put(job, 0);
 			}
 		}
+	}
+	/*SWAP 2 TEAM 8
+	 * Added this method to remove as much responsibility from Schedule as possible and hopefully control
+	 * any feature envy
+	 */
+	
+	public Boolean isWorkerAvailable(String job, String dayName, ArrayList<String> workersWorking){
+		Day workerDay = this.getDayWithName(dayName);
+	
+		Boolean canWorkThisJob = workerDay.canWork(job);
+		Boolean isNotAlreadyWorking = !workersWorking.contains(this.getName());
+		//added for days off in the week
+		Boolean notOffWork = !(this.daysOff.contains(dayName));
+		
+		return (canWorkThisJob && isNotAlreadyWorking && notOffWork);
+	}
+	
+	//Added to make the days off functional	
+	void addDaysOff(String day){
+		this.daysOff.add(day);
+	}
+	
+	void clearDaysOff(){
+		this.daysOff.clear();
+	}
+	
+	public int getTotalTimeWorked() {
+		int sum = 0;
+		for (String key : timesWorked.keySet()) {
+			sum += timesWorked.get(key);
+		}
+		return sum;
 	}
 	
 	/**
@@ -95,12 +130,6 @@ public class Worker implements Serializable{
 	 */
 	public void addDay(Day d) {
 		this.days.add(d);
-	}
-	
-	@Override
-	public String toString(){
-		
-		return this.name;
 	}
 	
 }
