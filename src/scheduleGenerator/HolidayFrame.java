@@ -90,51 +90,7 @@ public class HolidayFrame extends JFrame {
 	}
 	
 	public HolidayFrame(){
-		super();
-		
-		this.dates = new ArrayList<Date>();
-		
-		this.topPanel = new JPanel();
-		this.bottomPanel = new JPanel();
-		
-		this.getContentPane().setLayout(new BorderLayout());
-		this.topPanel.setLayout(new BoxLayout(this.topPanel, BoxLayout.Y_AXIS));
-		this.bottomPanel.setLayout(new BoxLayout(this.bottomPanel, BoxLayout.X_AXIS));
-		
-		JLabel dayLabel = new JLabel("Day: ");
-		JLabel monthLabel = new JLabel("Month: ");
-		JLabel directions = new JLabel("Add days that that this worker can not work to the below list.");
-		JLabel directions2 = new JLabel("Enter the month and day as their numerical representations.");
-		
-		listModel = new DefaultListModel();
-		datesList = new JList(listModel);
-		
-		this.datesList.setPreferredSize(new Dimension(datesList.getWidth(), 400));
-		
-		directions.setAlignmentX(CENTER_ALIGNMENT);
-		directions2.setAlignmentX(CENTER_ALIGNMENT);
-		doneButton.setAlignmentX(CENTER_ALIGNMENT);
-		
-		addActionListeners();
-		
-		this.topPanel.add(directions);
-		this.topPanel.add(directions2);
-		this.topPanel.add(doneButton);
-		this.add(datesList, BorderLayout.CENTER);
-		this.bottomPanel.add(monthLabel);
-		this.bottomPanel.add(monthInput);
-		this.bottomPanel.add(dayLabel);
-		this.bottomPanel.add(dayInput);
-		this.bottomPanel.add(addDate);
-		this.bottomPanel.add(removeDate);
-		
-		this.removeDate.setEnabled(false);
-		
-		this.add(this.topPanel, BorderLayout.NORTH);
-		this.add(this.bottomPanel, BorderLayout.SOUTH);
-		
-		this.pack();
-		this.setVisible(true);
+		this(new ArrayList());
 	}
 	
 	private void addActionListeners() {

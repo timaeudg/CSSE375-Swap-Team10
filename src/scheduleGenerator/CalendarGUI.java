@@ -9,6 +9,7 @@ import java.text.DateFormatSymbols;
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.NavigableSet;
@@ -66,60 +67,10 @@ public class CalendarGUI extends javax.swing.JFrame {
 	 */
 	private void setTitleMonth(int n, int year) {
 
-		String monthString = new DateFormatSymbols().getMonths()[n - 1];
+		String monthString = new DateFormatSymbols(Main.getLocale()).getMonths()[n - 1];
 		this.monthTitle.setText(monthString + " " + year);
 		this.monthName = monthString + " " + year;
 
-		// switch (n) {
-		// case (1):
-		// this.monthTitle.setText("January " + year);
-		// this.monthName = "January " + year;
-		// break;
-		// case (2):
-		// this.monthTitle.setText("February " + year);
-		// this.monthName = "February " + year;
-		// break;
-		// case (3):
-		// this.monthTitle.setText("March " + year);
-		// this.monthName = "March " + year;
-		// break;
-		// case (4):
-		// this.monthTitle.setText("April " + year);
-		// this.monthName = "April " + year;
-		// break;
-		// case (5):
-		// this.monthTitle.setText("May " + year);
-		// this.monthName = "May " + year;
-		// break;
-		// case (6):
-		// this.monthTitle.setText("June " + year);
-		// this.monthName = "June " + year;
-		// break;
-		// case (7):
-		// this.monthTitle.setText("July " + year);
-		// this.monthName = "July " + year;
-		// break;
-		// case (8):
-		// this.monthTitle.setText("August " + year);
-		// this.monthName = "August " + year;
-		// break;
-		// case (9):
-		// this.monthTitle.setText("September " + year);
-		// this.monthName = "September " + year;
-		// break;
-		// case (10):
-		// this.monthTitle.setText("October " + year);
-		// this.monthName = "October " + year;
-		// break;
-		// case (11):
-		// this.monthTitle.setText("November " + year);
-		// this.monthName = "November " + year;
-		// break;
-		// case (12):
-		// this.monthTitle.setText("December " + year);
-		// this.monthName = "December " + year;
-		// break;
-		// }
 	}
 
 	/*
@@ -301,27 +252,12 @@ public class CalendarGUI extends javax.swing.JFrame {
 	 * supporting multiple languages by use of a different kind of calendar This
 	 * refactoring was simple so it was fairly successful.
 	 */
-	private String getNameforNum(int n) {
-
-		return new DateFormatSymbols().getWeekdays()[n - 1];
-
-		// switch (n) {
-		// case (1):
-		// return "Sunday";
-		// case (2):
-		// return "Monday";
-		// case (3):
-		// return "Tuesday";
-		// case (4):
-		// return "Wednesday";
-		// case (5):
-		// return "Thursday";
-		// case (6):
-		// return "Friday";
-		// case (7):
-		// return "Saturday";
-		// }
-		// return null;
+	public static String getNameforNum(int n) {
+		return new DateFormatSymbols(Main.getLocale()).getWeekdays()[n];
+	}
+	
+	public static int getNumForName(String day) {
+		return Arrays.asList(new DateFormatSymbols(Main.getLocale()).getWeekdays()).indexOf(day);
 	}
 
 	private void initComponents() {
@@ -344,7 +280,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.generateText = new javax.swing.JMenuItem();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setTitle("Calendar");
+		setTitle(Main.getText("calendarTitle"));
 
 		this.monthTitle.setFont(new java.awt.Font("Tahoma", 1, 24));
 		this.monthTitle.setText("Month Name Here");
@@ -390,12 +326,12 @@ public class CalendarGUI extends javax.swing.JFrame {
 
 		this.jScrollPane1.setViewportView(this.scheduleTable);
 
-		this.fileMenu.setText("File");
+		this.fileMenu.setText(Main.getText("file"));
 
 		this.saveChanges.setAccelerator(javax.swing.KeyStroke.getKeyStroke(
 				java.awt.event.KeyEvent.VK_S,
 				java.awt.event.InputEvent.CTRL_MASK));
-		this.saveChanges.setText("Save Changes");
+		this.saveChanges.setText(Main.getText("saveChanges"));
 		this.saveChanges.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -404,26 +340,14 @@ public class CalendarGUI extends javax.swing.JFrame {
 		});
 		this.fileMenu.add(this.saveChanges);
 
-		this.undoChanges.setAccelerator(javax.swing.KeyStroke.getKeyStroke(
-				java.awt.event.KeyEvent.VK_Z,
-				java.awt.event.InputEvent.CTRL_MASK));
-		this.undoChanges.setText("Undo Changes");
-		this.undoChanges.addActionListener(new java.awt.event.ActionListener() {
-			@Override
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				undoChangesActionPerformed(evt);
-			}
-		});
-		// this.fileMenu.add(this.undoChanges);
-
 		this.menuBar.add(this.fileMenu);
 
-		this.editMenu.setText("Edit");
+		this.editMenu.setText(Main.getText("edit"));
 
 		this.editWorkers.setAccelerator(javax.swing.KeyStroke.getKeyStroke(
 				java.awt.event.KeyEvent.VK_W,
 				java.awt.event.InputEvent.CTRL_MASK));
-		this.editWorkers.setText("Edit Workers");
+		this.editWorkers.setText(Main.getText("editWorkers"));
 		this.editWorkers.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -435,7 +359,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.editDays.setAccelerator(javax.swing.KeyStroke.getKeyStroke(
 				java.awt.event.KeyEvent.VK_D,
 				java.awt.event.InputEvent.CTRL_MASK));
-		this.editDays.setText("Edit Days");
+		this.editDays.setText(Main.getText("editDays"));
 		this.editDays.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -448,7 +372,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 
 		/**/
 
-		JMenuItem editHolidays = new JMenuItem("Edit Holidays");
+		JMenuItem editHolidays = new JMenuItem(Main.getText("editHolidays"));
 		editHolidays.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -459,12 +383,12 @@ public class CalendarGUI extends javax.swing.JFrame {
 
 		/**/
 
-		this.generateMenu.setText("Generate");
+		this.generateMenu.setText(Main.getText("generate"));
 
 		this.genHtml.setAccelerator(javax.swing.KeyStroke.getKeyStroke(
 				java.awt.event.KeyEvent.VK_H,
 				java.awt.event.InputEvent.CTRL_MASK));
-		this.genHtml.setText("Generate Web Page");
+		this.genHtml.setText(Main.getText("generateWebPage"));
 		this.genHtml.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -476,7 +400,7 @@ public class CalendarGUI extends javax.swing.JFrame {
 		this.generateText.setAccelerator(javax.swing.KeyStroke.getKeyStroke(
 				java.awt.event.KeyEvent.VK_T,
 				java.awt.event.InputEvent.CTRL_MASK));
-		this.generateText.setText("Generate Text");
+		this.generateText.setText(Main.getText("generateText"));
 		this.generateText
 				.addActionListener(new java.awt.event.ActionListener() {
 					@Override

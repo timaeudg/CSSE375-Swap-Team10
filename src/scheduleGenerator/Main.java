@@ -7,7 +7,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import java.util.Date;
 
@@ -23,6 +26,10 @@ public class Main {
 	private static ArrayList<Worker> workers;
 	private static File path = new File("schedule_data.ser");
 	private static ArrayList<Date> holidayDates = new ArrayList<Date>();
+	private static Locale locale = new Locale("en", "US");
+	private static ResourceBundle bundle = ResourceBundle.getBundle("MessageBundle", locale);
+	private static MessageFormat formatter = new MessageFormat("", locale);
+	
 	
 	/**
 	 * Configures days.
@@ -163,8 +170,6 @@ public class Main {
 			fileStore.writeObject(HTMLGenerator.getTables());
 			fileStore.close();
 			dumpConfig.close();
-			
-			System.out.println("Stored");
 
 		} catch (FileNotFoundException exception) {
 			exception.printStackTrace();
@@ -200,5 +205,18 @@ public class Main {
 
 	public static void setHolidayDates(ArrayList<Date> holidayDates) {
 		Main.holidayDates = holidayDates;
+	}
+	
+	public static Locale getLocale() {
+		return locale;
+	}
+	
+	public static String getText(String s) {
+		return bundle.getString(s);
+	}
+	
+	public static String getFormattedString(String s, Object[] args) {
+		formatter.applyPattern(getText(s));
+		return formatter.format(args);
 	}
 }

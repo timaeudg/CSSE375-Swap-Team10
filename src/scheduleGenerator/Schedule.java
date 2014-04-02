@@ -70,7 +70,10 @@ public class Schedule extends Thread implements Serializable {
 	private void generateIndices() {
 		for (int i = 0; i < this.workers.size(); i++) {
 			for (Day day : this.workers.get(i).getDays()) {
-				int numDay = this.numForName(day.getNameOfDay());
+				System.out.println(day.getNameOfDay());
+				int numDay = CalendarGUI.getNumForName(day.getNameOfDay());
+				System.out.println(numDay);
+				System.out.println(this.workerIndices.get(numDay));
 				this.workerIndices.get(numDay).add(this.workers.get(i));
 			}
 		}
@@ -129,7 +132,7 @@ public class Schedule extends Thread implements Serializable {
 		int currDate = cal.get(Calendar.DAY_OF_MONTH);
 		int currMonth = cal.get(Calendar.MONTH) + 1;
 		
-		for (Worker worker : this.workerIndices.get(this.numForName(dayName))) {
+		for (Worker worker : this.workerIndices.get(CalendarGUI.getNumForName(dayName))) {
 			if (worker.isWorkerAvailable(job, dayName, workersWorking, currDate, currMonth)) {
 				workersForJob.add(worker);
 			}
@@ -218,12 +221,11 @@ public class Schedule extends Thread implements Serializable {
 			} else {
 				jobsWithWorker.put(job, new Worker("Empty",
 						new ArrayList<Day>()));
+				Object[] args = {job, dayName};
 				JOptionPane
 						.showMessageDialog(
 								new JFrame(),
-								"No workers are able to work as a(n) "
-										+ job + " on "
-										+ dayName);
+								Main.getFormattedString("noAvailableWorkers", args));
 				this.workerForEveryJob = false;
 				break;
 			}
@@ -254,7 +256,7 @@ public class Schedule extends Thread implements Serializable {
 		while (currentMonth == this.cal.get(Calendar.MONTH)) {
 			
 			for (Day day : this.days) {
-				if (this.cal.get(Calendar.DAY_OF_WEEK) == this.numForName(day.getNameOfDay())) {	
+				if (this.cal.get(Calendar.DAY_OF_WEEK) == CalendarGUI.getNumForName(day.getNameOfDay())) {	
 					daysInMonth++;
 					ArrayList<String> jobsInOrder = day.getJobs();
 					numOfJobs.add(jobsInOrder.size());
@@ -286,38 +288,11 @@ public class Schedule extends Thread implements Serializable {
 	 * To keep consistent with other changes made in the system i have generalized this conversion of a String nameOfDay to be compatible with any calendar type
 	 * We can now use any type of calendar and they system will still function as intended essentailly internationalizing the system. 
 	 *  This refactoring was fairly simple so it was pretty successful
+	 *  
+	 *  SWAP 3, TEAM 10
+	 *  This code duplicated (poorly) the getNumForName from CalendarGUI so I removed it and just used calls to that method
 	 */
-	private int numForName(String nameOfDay) {
-		
-		String[] days=new DateFormatSymbols().getWeekdays();
-		int dayNum = 0;
-		for (String day: days){
-			if (day.equals(nameOfDay)){
-				return dayNum;
-			}else{
-				dayNum++;
-			}
-		}
-		return 0;
-		
-		
-//		if (nameOfDay.equals("Sunday")) {
-//			dayNum = 1;
-//		} else if (nameOfDay.equals("Monday")) {
-//			dayNum = 2;
-//		} else if (nameOfDay.equals("Tuesday")) {
-//			dayNum = 3;
-//		} else if (nameOfDay.equals("Wednesday")) {
-//			dayNum = 4;
-//		} else if (nameOfDay.equals("Thursday")) {
-//			dayNum = 5;
-//		} else if (nameOfDay.equals("Friday")) {
-//			dayNum = 6;
-//		} else if (nameOfDay.equals("Saturday")) {
-//			dayNum = 7;
-//		}
-//		return dayNum;
-	}
+	
 
 	// /**
 	// * Returns the month/day/year of next date with the name of day.

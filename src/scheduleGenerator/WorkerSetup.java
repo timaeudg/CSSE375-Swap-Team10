@@ -113,7 +113,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 			tempDayJobPane.setViewportView(tempPanel);
 
 			// Label the Pane
-			JLabel jobLabel = new JLabel("Preferred Jobs:");
+			JLabel jobLabel = new JLabel(Main.getText("preferredJobs"));
 
 			// Create a tab Panel for the Worker Tab and add the inputs.
 
@@ -167,7 +167,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 		}
 
 		// Add a section for the worker's name
-		JLabel workerNameLabel = new JLabel("Worker's Name:");
+		JLabel workerNameLabel = new JLabel(Main.getText("workersName"));
 
 		javax.swing.GroupLayout workerTab1Layout = new javax.swing.GroupLayout(
 				tempWorkerTab);
@@ -240,11 +240,11 @@ public class WorkerSetup extends javax.swing.JFrame {
 		// Prevents a nullPointer
 		if (this.workerTabs.size() == 0) {
 			this.workerTabs.add(tempWorkerTab);
-			this.workerTabPanel.addTab("Worker 1", null, tempWorkerTab, "");
+			this.workerTabPanel.addTab(Main.getText("defaultWorkerName") + " 1", null, tempWorkerTab, "");
 		} else {
 			this.workerTabs.add(tempWorkerTab);
 			this.workerTabPanel.addTab(
-					"Worker " + String.valueOf(this.workerTabs.size()), null,
+					Main.getText("defaultWorkerName") +" " + String.valueOf(this.workerTabs.size()), null,
 					tempWorkerTab, "");
 		}
 	}
@@ -264,9 +264,9 @@ public class WorkerSetup extends javax.swing.JFrame {
 
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setTitle("Worker Setup");
+		setTitle(Main.getText("workerTitle"));
 
-		this.addButton.setText("Add Worker");
+		this.addButton.setText(Main.getText("addWorker"));
 		this.addButton.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {				
@@ -274,7 +274,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 			}
 		});
 
-		this.removeButton.setText("Remove Worker");
+		this.removeButton.setText(Main.getText("removeWorker"));
 		this.removeButton
 				.addActionListener(new java.awt.event.ActionListener() {
 					@Override
@@ -283,7 +283,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 					}
 				});
 
-		this.nextButton.setText("Next");
+		this.nextButton.setText(Main.getText("next"));
 		this.nextButton.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,7 +291,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 			}
 		});
 
-		this.backButton.setText("Back");
+		this.backButton.setText(Main.getText("back"));
 		this.backButton.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -386,7 +386,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 			JTextField nameArea = (JTextField) tab.getComponent(2);
 			if (nameArea.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(this,
-						"You have not entered a name for every worker.");
+						Main.getText("requiredWorkerName"));
 				allGood = false;
 				break;
 			}
@@ -440,11 +440,7 @@ public class WorkerSetup extends javax.swing.JFrame {
 		//Swap 2 Team 8 added this to allow the user to enter dates and then they 
 		HolidayFrame temp = new HolidayFrame();
 		if(temp.getDates() != null){
-			if(this.vacationDays == null){
-				System.out.println("Blah");
-			}else{
-				this.vacationDays.add(temp.getDates());
-			}
+			this.vacationDays.add(temp.getDates());
 		}
 		this.addWorker();
 	}

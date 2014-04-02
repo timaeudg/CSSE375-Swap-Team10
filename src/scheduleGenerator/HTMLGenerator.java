@@ -143,7 +143,7 @@ public class HTMLGenerator {
 	/**
 	 * Used to put header.
 	 */
-	static String top = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns='http://www.w3.org/1999/xhtml'><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><title>Rose-Hulman Schedule Generator</title><link href='css/main.css' rel='stylesheet' type='text/css' />\n" +
+	static String top = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html xmlns='http://www.w3.org/1999/xhtml'><head><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><title>" + Main.getText("HTMLtitle") + "</title><link href='css/main.css' rel='stylesheet' type='text/css' />\n" +
 			"<script type='text/javascript'>window.onload = function() {\n	" +
 			"		document.getElementById('monthName').innerHTML = '<input onclick=\\\'monthBack()\\\' type=\\\'submit\\\' name=\\\'monthBack\\\' id=\\\'monthBack\\\' value=\\\'&lt;\\\' /> ' + months[monthIndex][0] + 		' <input type=\\\'submit\\\' name=\\\'monthAhead\\\' id=\\\'monthAhead\\\' value=\\\'&gt;\\\' onclick=\\\'monthAhead()\\\' />';\n" +
 			"		document.getElementById('middle').innerHTML = tables[monthIndex];\n" +
@@ -189,7 +189,7 @@ public class HTMLGenerator {
 			"	}\n" +
 			"}\n" +
 			"</script>\n" +
-			"</head><body><table width='100%' border='0' id='container'>  <tr>   <td colspan='3' id='head'><img src='images/head.gif' width='500' height='150' alt='header' /></td> </tr> <tr>   <td width='15%' rowspan='2' id='left'>&nbsp;</td>   <td height='84' id='monthName'></td>   <td width='19%' rowspan='2' id='right'>&nbsp;</td> </tr> <tr>   <td width='66%' height='606' id='middle'>";
+			"</head><body><table width='100%' border='0' id='container'>  <tr>   <td colspan='3' id='head'><img src='images/" + Main.getText("HTMLHeadSrc") + "' width='500' height='150' alt='header' /></td> </tr> <tr>   <td width='15%' rowspan='2' id='left'>&nbsp;</td>   <td height='84' id='monthName'></td>   <td width='19%' rowspan='2' id='right'>&nbsp;</td> </tr> <tr>   <td width='66%' height='606' id='middle'>";
 	// Insert Table
 	/**
 	 * Used as footer
