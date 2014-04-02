@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 
+import java.util.Date;
+
 /**
  * This class handles the interaction of one frame to another as well as
  * handling initialization.
@@ -20,6 +22,7 @@ public class Main {
 	private static ArrayList<Day> days;
 	private static ArrayList<Worker> workers;
 	private static File path = new File("schedule_data.ser");
+	private static ArrayList<Date> holidayDates = new ArrayList<Date>();
 	
 	/**
 	 * Configures days.
@@ -33,7 +36,7 @@ public class Main {
 	 * Displays schedule.
 	 */
 	static CalendarGUI cal;
-	private static AbstractSchedule schedule;
+	private static Schedule schedule;
 
 	/**
 	 * Program starts here.
@@ -41,6 +44,7 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		// new HolidayPanel(new ArrayList<Date>());
 		path = new File("schedule_data.ser");
 		config = new Config();
 		
@@ -48,16 +52,16 @@ public class Main {
 		
 		try {
 			recallConfigFile();
-			if(getSchedule() != (null)){
+			if(getSchedule() != (null)) {
 				cal = new CalendarGUI(getSchedule());
 				//config.setVisible(true);
 				cal.setVisible(true);
-			} else{
+			} else {
 				config.setVisible(true);
+				// new HolidayPanel(new ArrayList<Date>());
 			}
 		} catch (Exception exception) {
 			exception.printStackTrace();
-			
 		}
 	}
 
@@ -92,7 +96,7 @@ public class Main {
 	 * 
 	 * @return Returns the schedule.
 	 */
-	public static AbstractSchedule getSchedule() {
+	public static Schedule getSchedule() {
 		return Main.schedule;
 	}
 
@@ -102,7 +106,7 @@ public class Main {
 	 * @param schedule
 	 *            The schedule to set.
 	 */
-	public static void setSchedule(AbstractSchedule schedule) {
+	public static void setSchedule(Schedule schedule) {
 		Main.schedule = schedule;
 	}
 
@@ -177,32 +181,24 @@ public class Main {
 	 */
 	@SuppressWarnings("unchecked")
 	public static void recallConfigFile() throws ClassNotFoundException, IOException{
-	    System.out.println(path);
 		if(path.exists()) {
 			FileInputStream recallConfig = new FileInputStream(path);
 			ObjectInputStream fileRecall = new ObjectInputStream(recallConfig);
 			days = (ArrayList<Day>) fileRecall.readObject();
 			workers = (ArrayList<Worker>) fileRecall.readObject();
-			schedule = (AbstractSchedule) fileRecall.readObject();
+			schedule = (Schedule) fileRecall.readObject();
 			HTMLGenerator.setTables((String)fileRecall.readObject());
 			
 			fileRecall.close();
 			recallConfig.close();
 		}
 	}
-	
-	public static void recallChosenConfigFile(String filename, String path) throws IOException, ClassNotFoundException{
-	    File filepath = new File(path + "\\" + filename);
-	    if(filepath.exists()) {
-            FileInputStream recallConfig = new FileInputStream(filepath);
-            ObjectInputStream fileRecall = new ObjectInputStream(recallConfig);
-            days = (ArrayList<Day>) fileRecall.readObject();
-            workers = (ArrayList<Worker>) fileRecall.readObject();
-            schedule = (AbstractSchedule) fileRecall.readObject();
-            HTMLGenerator.setTables((String)fileRecall.readObject());
-            
-            fileRecall.close();
-            recallConfig.close();
-        }
+
+	public static ArrayList<Date> getHolidayDates() {
+		return holidayDates;
+	}
+
+	public static void setHolidayDates(ArrayList<Date> holidayDates) {
+		Main.holidayDates = holidayDates;
 	}
 }

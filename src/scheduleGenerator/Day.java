@@ -9,11 +9,17 @@ import java.util.ArrayList;
  * @author schneimd.
  *         Created Oct 15, 2012.
  */
+
+/*
+ * SWAP 1, TEAM 7
+ * Smell: Data Class
+ * The original Day class only stores and retrieves the dayOfWeek and jobs variables
+ * We should change this class by adding common usage and responsibilities into this class. 
+ * Perhaps we could add a list of available workers to Day to simplify the logic in Schedule
+ */
+
 public class Day implements Serializable{
-	//SWAP 1, Team 10
-	//SMELL: Data Class - this class consists entirely of accessors and mutators.  
-	//It would be advantageous to make it so this object kept track of requirements about what is allowed on days 
-	//and more conveniently could go from the id version of days to the named version
+	
 	private String dayOfWeek;
 	private ArrayList<String> jobs = new ArrayList<String>();
 	
@@ -67,5 +73,9 @@ public class Day implements Serializable{
 	 */
 	public String getNameOfDay() {
 		return this.dayOfWeek;
+	}
+	
+	public Boolean canWork(String job){
+		return this.getJobs().contains(job);
 	}
 }
