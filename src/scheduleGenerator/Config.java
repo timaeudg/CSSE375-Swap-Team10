@@ -36,6 +36,13 @@ import javax.swing.JTextField;
  *  
  * 
  */
+// SWAP 3 Team 10
+//ENHANCEMENT FROM REFACTORING
+//I wasn't sure exactly where to describe what we did (it changed code in several places) but a lot of the work we did was in here.
+// The major enhancement we did was to completely internationalize the system.  It no longer has any hard coded strings based upon particular days
+// or for any other text.  It now has the option of either English or Spanish.  It utilizes a message bundle for the various string around and 
+// particular locale based java utilities to get different day and month strings.  In class, Chenowith said that this would make for a 
+// long enough feature to count for the entire swap because it dealt with lots of changes and greatly enhanced the overall system.
 public class Config extends javax.swing.JFrame {
 
     private boolean firstSelection = true;
@@ -471,7 +478,7 @@ public class Config extends javax.swing.JFrame {
      *  
      *  SWAP 3, TEAM 10
      *  This "refactoring" was also unused, unfinished and didn't fix anything.  I also had to go through and actually do this refactoring to make it useful so I could effectively do this.
-     *  The present version which matches the descritpion from SWAP 1 is draticallay different than what swap 2 gave us
+     *  The present version which matches the description from SWAP 1 is drasticallay different than what swap 2 gave us
      */
     private JScrollPane[] scrollPaneList = new JScrollPane[7];
 	private JButton[] addJobButton = new JButton[7];

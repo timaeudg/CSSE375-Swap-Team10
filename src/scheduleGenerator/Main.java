@@ -53,6 +53,12 @@ public class Main {
 	public static void main(String[] args) {
 		// new HolidayPanel(new ArrayList<Date>());
 		path = new File("schedule_data.ser");
+		SelectLanguage ls = new SelectLanguage();
+		ls.setVisible(true);
+		
+	}
+	
+	public static void run() {
 		config = new Config();
 		
 		//Code to open the config file.
@@ -209,6 +215,12 @@ public class Main {
 	
 	public static Locale getLocale() {
 		return locale;
+	}
+	
+	public static void setLocale(Locale locale) {
+		Main.locale = locale;
+		Main.bundle = ResourceBundle.getBundle("MessageBundle", locale);
+		Main.formatter = new MessageFormat("", locale);
 	}
 	
 	public static String getText(String s) {
